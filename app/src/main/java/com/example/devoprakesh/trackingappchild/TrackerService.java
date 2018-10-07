@@ -1,10 +1,26 @@
 package com.example.devoprakesh.trackingappchild;
 
+import android.Manifest;
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.IBinder;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class TrackerService extends Service {
+
+
     public TrackerService() {
     }
 
@@ -19,20 +35,59 @@ public class TrackerService extends Service {
         super.onCreate();
 
         buildNotification();
-        loginToFirebase();
+        LocationUpdateFirebase();
     }
 
 
     public void buildNotification(){
 
+        Toast.makeText(this,"Location tacking started",Toast.LENGTH_LONG)
+                .show();
 
     }
 
 
 
 
-    public void loginToFirebase(){
+
+    public void LocationUpdateFirebase(){
+
+        LocationRequest request = new LocationRequest();
+        request.setInterval(10000);
+        request.setFastestInterval(5000);
+        request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
+
+        int permission = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+
+        if( permission == PackageManager.PERMISSION_GRANTED){
+
+            client.requestLocationUpdates(request,new LocationCallback(){
+
+                @Override
+                public void onLocationResult(LocationResult locationResult) {
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                            .getReference();
+
+                    Location location = locationResult.getLastLocation();
+                    if(location != null){
+
+                        Log.i("Location","Location Update "+location);
+                        databaseReference.child("Current").setValue(location);
+
+                        databaseReference.child("Tracking").setValue(location);
+                    }
+                }
+            },null);
+        }
+    }
 
 
+    @Override
+    public void onDestroy() {
+        Toast.makeText(getApplicationContext(),"Stoped",Toast.LENGTH_LONG)
+                .show();
     }
 }
