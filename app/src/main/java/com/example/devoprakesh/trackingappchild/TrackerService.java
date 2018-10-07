@@ -123,7 +123,7 @@ public class TrackerService extends Service {
 
     @Override
     public void onDestroy() {
-        Toast.makeText(getApplicationContext(),"Stoped",Toast.LENGTH_LONG)
+        Toast.makeText(getApplicationContext(),"Stopped",Toast.LENGTH_LONG)
                 .show();
         client.removeLocationUpdates(mCallbacks);
         stopSelf();
