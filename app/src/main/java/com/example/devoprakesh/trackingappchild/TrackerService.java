@@ -49,7 +49,7 @@ public class TrackerService extends Service {
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance()
-                        .getReference(Usernumber);
+                        .getReference("Childrens").child(Usernumber);
 
                 Location location = locationResult.getLastLocation();
                 if(location != null){
