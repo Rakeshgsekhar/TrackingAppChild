@@ -29,16 +29,28 @@ public class Home extends AppCompatActivity {
         LocationManager locationManager = (LocationManager)
                 getSystemService(LOCATION_SERVICE);
 
-        if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            Toast.makeText(this,"Please Enable Location Service",Toast.LENGTH_LONG)
-                    .show();
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            Toast.makeText(Home.this,
+                    "Please enable location service GPS",Toast.LENGTH_LONG).show();
             finish();
         }
 
+        startSer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StartServ();
+            }
+        });
+
+        stopSer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StopSer();
+            }
+        });
+
         int permission = ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION);
         if (permission == PackageManager.PERMISSION_GRANTED){
-
-            //startTrackerService();
 
 
         }else{
@@ -51,10 +63,6 @@ public class Home extends AppCompatActivity {
 
     }
 
-    private void startTrackerService(){
-
-
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull
@@ -78,7 +86,6 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startService(new Intent(Home.this,TrackerService.class));
-                //finish();
             }
         });
     }

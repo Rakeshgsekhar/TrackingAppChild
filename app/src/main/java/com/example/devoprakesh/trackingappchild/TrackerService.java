@@ -3,6 +3,7 @@ package com.example.devoprakesh.trackingappchild;
 import android.Manifest;
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.IBinder;
@@ -20,7 +21,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class TrackerService extends Service {
 
-
+    FusedLocationProviderClient client;
+    LocationRequest request;
+    LocationCallback mCallbacks;
     public TrackerService() {
     }
 
@@ -33,6 +36,31 @@ public class TrackerService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
+
+
+
+
+        SharedPreferences sharedPreferences = getSharedPreferences("ChildLoginDetails",MODE_PRIVATE);
+
+        final String Usernumber = sharedPreferences.getString("Number",null);
+        mCallbacks = new LocationCallback(){
+
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                        .getReference(Usernumber);
+
+                Location location = locationResult.getLastLocation();
+                if(location != null){
+
+                    Log.i("Location","Location Update "+location);
+                    databaseReference.child("Current").setValue(location);
+
+                    databaseReference.child("Tracking").push().setValue(location);
+                }
+            }
+        };
 
         buildNotification();
         LocationUpdateFirebase();
@@ -50,26 +78,30 @@ public class TrackerService extends Service {
 
 
 
+
     public void LocationUpdateFirebase(){
 
-        LocationRequest request = new LocationRequest();
+
+        request = new LocationRequest();
         request.setInterval(10000);
         request.setFastestInterval(5000);
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-        FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
+        client = LocationServices.getFusedLocationProviderClient(this);
 
         int permission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
 
         if( permission == PackageManager.PERMISSION_GRANTED){
 
-            client.requestLocationUpdates(request,new LocationCallback(){
+            client.requestLocationUpdates(request,mCallbacks,null );
+
+            /*new LocationCallback(){
 
                 @Override
                 public void onLocationResult(LocationResult locationResult) {
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance()
-                            .getReference();
+                            .getReference(Usernumber);
 
                     Location location = locationResult.getLastLocation();
                     if(location != null){
@@ -77,10 +109,14 @@ public class TrackerService extends Service {
                         Log.i("Location","Location Update "+location);
                         databaseReference.child("Current").setValue(location);
 
-                        databaseReference.child("Tracking").setValue(location);
+                        databaseReference.child("Tracking").push().setValue(location);
                     }
                 }
-            },null);
+            },null);*/
+
+
+
+
         }
     }
 
@@ -89,5 +125,8 @@ public class TrackerService extends Service {
     public void onDestroy() {
         Toast.makeText(getApplicationContext(),"Stoped",Toast.LENGTH_LONG)
                 .show();
+        client.removeLocationUpdates(mCallbacks);
+        stopSelf();
+
     }
 }
