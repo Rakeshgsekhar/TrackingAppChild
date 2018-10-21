@@ -25,7 +25,6 @@ public class UserDetails extends AppCompatActivity {
 
     EditText regname,regemailid;
     String strname,stremailid;
-    FirebaseDatabase firebaseDatabase;
     int Unicode=0;
     DatabaseReference databaseReference;
 
