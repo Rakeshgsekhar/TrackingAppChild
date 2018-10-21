@@ -3,6 +3,7 @@
     package="com.example.devoprakesh.trackingappchild">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,7 +26,9 @@
         <service
             android:name=".TrackerService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".UserDetails"></activity>
     </application>
 
 </manifest>
