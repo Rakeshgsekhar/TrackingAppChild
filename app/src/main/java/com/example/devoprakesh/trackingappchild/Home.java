@@ -100,9 +100,6 @@ public class Home extends AppCompatActivity {
 
             }
         });
-        SharedPreferences sharedPreferences = getSharedPreferences("ChildLoginDetails",MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
-        editor.apply();
+
     }
 }
