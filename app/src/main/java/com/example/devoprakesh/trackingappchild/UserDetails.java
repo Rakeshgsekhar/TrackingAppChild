@@ -1,5 +1,6 @@
 package com.example.devoprakesh.trackingappchild;
 
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -47,7 +48,7 @@ public class UserDetails extends AppCompatActivity {
                     LayoutInflater inflator = LayoutInflater.from(UserDetails.this);
 
                     View unicodeview = inflator.inflate(R.layout.promptunicode,null);
-
+                    AlertDialog.Builder builder = new AlertDialog.Builder(UserDetails.this);
 
                 }else{
 
