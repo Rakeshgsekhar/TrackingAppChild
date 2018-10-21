@@ -74,6 +74,7 @@ public class UserDetails extends AppCompatActivity {
                                 TextView unocode = unicodeview.findViewById(R.id.unicodeval);
 
                                 unocode.setText(unicodestr);
+                                builder.setView(unicodeview);
                                 builder.setCancelable(false)
                                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             @Override
@@ -85,6 +86,9 @@ public class UserDetails extends AppCompatActivity {
                                                 finish();
                                             }
                                         });
+                                AlertDialog alertDialog = builder.create();
+
+                                alertDialog.show();
                             }else{
                                 Toast.makeText(UserDetails.this
                                         ,"Data Update Error"

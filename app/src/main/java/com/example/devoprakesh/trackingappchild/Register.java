@@ -133,10 +133,10 @@ public class Register extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        verifynumber = sharedPreferences.getString("Number",null);
+        verifynumber = sharedPreferences.getString("Number","null");
         FirebaseUser user = mAuth.getCurrentUser();
 
-        if(user != null && verifynumber.equals(user.getPhoneNumber())){
+        if(!verifynumber.equals("null")){
 
             Intent intent = new Intent(Register.this,Home.class);
             startActivity(intent);
