@@ -36,6 +36,9 @@ public class UserDetails extends AppCompatActivity {
         setContentView(R.layout.activity_user_details);
 
 
+        SharedPreferences sharedPreferences = getSharedPreferences("ChildLoginDetails",MODE_PRIVATE);
+
+        final String Usernumber = sharedPreferences.getString("Number",null);
         regname = findViewById(R.id.regname);
         regemailid = findViewById(R.id.emialreg);
         next = findViewById(R.id.nextbtn);
@@ -53,10 +56,8 @@ public class UserDetails extends AppCompatActivity {
 
 
 
-                    UserData data = new UserData(strname,stremailid,unicodestr);
-                    SharedPreferences sharedPreferences = getSharedPreferences("ChildLoginDetails",MODE_PRIVATE);
+                    UserData data = new UserData(strname,stremailid,unicodestr,Usernumber);
 
-                    final String Usernumber = sharedPreferences.getString("Number",null);
                     databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
                     databaseReference.child(Usernumber).setValue(data)

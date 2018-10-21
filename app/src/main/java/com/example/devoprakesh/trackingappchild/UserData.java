@@ -5,11 +5,13 @@ public class UserData {
     String name;
     String email;
     String unicode;
+    String phonenumber;
 
-    public UserData(String name, String email, String unicode) {
+    public UserData(String name, String email, String unicode,String phonenumber) {
         this.name = name;
         this.email = email;
         this.unicode = unicode;
+        this.phonenumber = phonenumber;
     }
 
 
@@ -35,5 +37,13 @@ public class UserData {
 
     public void setUnicode(String unicode) {
         this.unicode = unicode;
+    }
+
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
     }
 }
