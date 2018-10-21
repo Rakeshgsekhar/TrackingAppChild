@@ -1,5 +1,6 @@
 package com.example.devoprakesh.trackingappchild;
 
+import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -48,7 +50,20 @@ public class UserDetails extends AppCompatActivity {
                     LayoutInflater inflator = LayoutInflater.from(UserDetails.this);
 
                     View unicodeview = inflator.inflate(R.layout.promptunicode,null);
-                    AlertDialog.Builder builder = new AlertDialog.Builder(UserDetails.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder
+                            (UserDetails.this);
+
+                    TextView unocode = unicodeview.findViewById(R.id.unicodeval);
+
+                    unocode.setText(unicodestr);
+                    builder.setCancelable(false)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            });
+
 
                 }else{
 
