@@ -1,6 +1,7 @@
 package com.example.devoprakesh.trackingappchild;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -78,6 +79,10 @@ public class UserDetails extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
                                                 dialogInterface.cancel();
+
+                                                Intent intent = new Intent(UserDetails.this,Home.class);
+                                                startActivity(intent);
+                                                finish();
                                             }
                                         });
                             }else{

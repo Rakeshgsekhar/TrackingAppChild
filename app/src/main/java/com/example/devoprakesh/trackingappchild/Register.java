@@ -117,7 +117,7 @@ public class Register extends AppCompatActivity {
                             editor.putString("Number",user.getPhoneNumber());
                             editor.apply();
 
-                            Intent intent = new Intent(Register.this,Home.class);
+                            Intent intent = new Intent(Register.this,UserDetails.class);
                             startActivity(intent);
                             finish();
                         }else{
