@@ -46,6 +46,7 @@ public class UserDetails extends AppCompatActivity {
 
                     LayoutInflater inflator = LayoutInflater.from(UserDetails.this);
 
+                    View unicodeview = inflator.inflate(R.layout.promptunicode,null);
 
 
                 }else{
