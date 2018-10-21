@@ -1,6 +1,7 @@
 package com.example.devoprakesh.trackingappchild;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,6 +47,15 @@ public class UserDetails extends AppCompatActivity {
 
                     Unicode = getCode();
                     String unicodestr = "C-"+Unicode;
+
+
+
+                    SharedPreferences sharedPreferences = getSharedPreferences("ChildLoginDetails",MODE_PRIVATE);
+
+                    final String Usernumber = sharedPreferences.getString("Number",null);
+                    databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+
+                    databaseReference.child(Usernumber).setValue()
 
                     LayoutInflater inflator = LayoutInflater.from(UserDetails.this);
 
