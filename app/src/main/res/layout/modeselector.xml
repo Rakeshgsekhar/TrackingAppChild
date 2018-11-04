@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/headmode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mode Selector"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        />
+
+    <RadioGroup
+        android:id="@+id/radiogroup"
+        android:layout_below="@id/headmode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <RadioButton
+            android:id="@+id/bygps"
+            android:checked="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="By GPS"/>
+
+        <RadioButton
+            android:id="@+id/bytower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="By Tower"/>
+
+    </RadioGroup>
+
+
+</RelativeLayout>

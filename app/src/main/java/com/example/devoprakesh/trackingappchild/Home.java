@@ -17,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -34,6 +36,8 @@ public class Home extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     EditText unicode;
+    RadioGroup modegroup;
+    RadioButton modebtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,7 @@ public class Home extends AppCompatActivity {
         startSer = findViewById(R.id.startServicebtn);
         stopSer = findViewById(R.id.stopservicebtn);
 
+        editor = sharedPreferences.edit();
         LocationManager locationManager = (LocationManager)
                 getSystemService(LOCATION_SERVICE);
 
@@ -56,7 +61,49 @@ public class Home extends AppCompatActivity {
         startSer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                StartServ();
+
+                LayoutInflater modeinflator = LayoutInflater.from(Home.this);
+                View modeView = modeinflator.inflate(R.layout.modeselector,
+                        null);
+
+                alertDialogBuilder = new AlertDialog.Builder(Home.this);
+                alertDialogBuilder.setView(modeView);
+
+                modegroup = modeView.findViewById(R.id.radiogroup);
+
+                alertDialogBuilder.setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                int radioid = modegroup.getCheckedRadioButtonId();
+
+                                switch(radioid){
+                                    case R.id.bygps:
+                                        editor.putString("Mode","GPS");
+                                        editor.apply();
+                                        break;
+                                    case R.id.bytower:
+                                        editor.putString("Mode","TOWER");
+                                        editor.apply();
+                                        break;
+
+                                }
+
+                                StartServ();
+
+                            }
+                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                       dialogInterface.cancel();
+                    }
+                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
+
+
             }
         });
 
