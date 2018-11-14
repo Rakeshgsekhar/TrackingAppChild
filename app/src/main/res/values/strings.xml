@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TrackingAppChild</string>
+    <string name="app_name">CTS app</string>
     <string name="phone_number">Phone Number</string>
     <string name="send_otp">Send OTP</string>
     <string name="otp">OTP</string>
